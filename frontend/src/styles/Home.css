@@ -1,0 +1,58 @@
+.home-center{
+ height:100vh;
+ background:url("../assets/college.jpg") no-repeat center/cover;
+ background-size:cover;
+ display:flex;
+ flex-direction:column;
+ justify-content:flex-start; /* align items from top */
+ align-items:center;
+ padding-top:120px; /* increase top padding to push content upward */
+ gap:25px; /* space between welcome text and login box */
+}
+
+/* Welcome text above box */
+.welcome-top{
+ color:black;
+ font-size:36px;
+ font-weight:900;
+ letter-spacing:2px;
+ text-align:center;
+ text-shadow:0 0 15px rgba(255,255,255,0.9);
+ animation:pop 1.2s ease-in-out infinite alternate;
+}
+
+/* Pop animation for the text */
+@keyframes pop{
+ from{ transform:scale(1); }
+ to{ transform:scale(1.05); }
+}
+
+/* Login buttons container */
+.center-box{
+ background:rgba(255,255,255,0.9);
+ padding:45px 60px;
+ border-radius:22px;
+ display:flex;
+ flex-direction:column;
+ gap:20px;
+ box-shadow:0 15px 40px rgba(0,0,0,0.4);
+}
+
+/* Buttons */
+.center-box button{
+ padding:16px;
+ font-size:16px;
+ border:none;
+ background:#393fe9;
+ color:white;
+ border-radius:10px;
+ cursor:pointer;
+ width:240px;
+ transition:all 0.3s ease;
+}
+
+.center-box button:hover{
+ background:#00ccff;
+ color:black;
+ transform:scale(1.05);
+}

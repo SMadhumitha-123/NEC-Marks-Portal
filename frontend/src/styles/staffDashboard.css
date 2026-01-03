@@ -1,0 +1,45 @@
+.dashboard {
+  min-height: 100vh;
+  background: url("../assets/college.jpg") no-repeat center/cover;
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center;     /* vertical center */
+  padding: 0;              /* remove padding-top */
+}
+
+.dashboard-box {
+  background: rgba(255,255,255,0.9);
+  padding: 40px;
+  border-radius: 20px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.dashboard-box h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.dashboard-box select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.dashboard-box button {
+  padding: 12px;
+  background: #002244;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dashboard-box button:hover {
+  background: #00ccff;
+  color: black;
+}
