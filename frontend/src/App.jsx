@@ -1,22 +1,70 @@
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import StaffLogin from "./pages/StaffLogin";
-import AdminLogin from "./pages/AdminLogin";
-import StaffSignup from "./pages/StaffSignup";
-import AdminSignup from "./pages/AdminSignup";
+import Login from "./pages/Login";
+import AdminDashboard from "./pages/AdminDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
+import AddSubject from "./pages/AddSubject";
+import AddStudent from "./pages/AddStudent";
+import AddStaff from "./pages/AddStaff";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Pages WITH layout */}
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Home />
+            </Layout>
+          }
+        />
+
+        {/* Login page WITHOUT layout */}
+        <Route path="/login" element={<Login />} />
+
+        <Route
+  path="/admin"
+  element={
+    <Layout>
+      <AdminDashboard />
+    </Layout>
+  }
+/>
 
 
-export default function App() {
- return (
-  <Routes>
-    <Route path="/" element={<Home/>}/>
-    <Route path="/staff-login" element={<StaffLogin/>}/>
-    <Route path="/admin-login" element={<AdminLogin/>}/>
-    <Route path="/staff-signup" element={<StaffSignup/>}/>
-    <Route path="/admin-signup" element={<AdminSignup/>}/>
-    <Route path="/staff-dashboard" element={<StaffDashboard />} />
+<Route
+  path="/admin/add-subject"
+  element={
+    <Layout>
+      <AddSubject />
+    </Layout>
+  }
+/>
 
-  </Routes>
- );
+<Route
+  path="/admin/add-student"
+  element={
+    <Layout>
+      <AddStudent />
+    </Layout>
+  }
+/>
+
+<Route
+  path="/admin/add-staff"
+  element={
+    <Layout>
+      <AddStaff />
+    </Layout>
+  }
+/>
+
+      </Routes>
+    </BrowserRouter>
+  );
 }
+
+export default App;

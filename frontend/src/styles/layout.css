@@ -1,0 +1,17 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  /* Background image */
+  background-image: url("src/assets/college.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.content {
+  flex: 1;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+}

@@ -1,9 +1,7 @@
-.footer{
- background:rgba(0,0,0,0.6);
- color:white;
- text-align:center;
- padding:10px;
- position:fixed;
- bottom:0;
- width:100%;
+.footer {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
 }
