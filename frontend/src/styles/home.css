@@ -1,0 +1,109 @@
+.home-hero {
+  height: 650px;
+  background-image: url("../assets/college-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+    overflow: hidden;                /* prevents side cut */
+
+}
+
+/* Dark overlay for readability */
+.hero-overlay {
+  height: 100%;
+  width: 100%;
+    
+  background: linear-gradient(
+    rgba(0, 30, 60, 0.65),
+    rgba(0, 30, 60, 0.65)
+  );
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+/* Title */
+.hero-overlay h1 {
+  font-size: 42px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Subtitle */
+.hero-overlay p {
+  font-size: 18px;
+  margin-bottom: 25px;
+  opacity: 0.9;
+}
+
+/* Button */
+.hero-overlay button {
+  padding: 12px 30px;
+  font-size: 16px;
+
+  background-color: #ffcc00;
+  color: #003366;
+
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+
+  transition: all 0.3s ease;
+}
+
+.hero-overlay button:hover {
+  background-color: #e6b800;
+  transform: translateY(-2px);
+}
+
+/* Main title */
+.welcome-title {
+  font-size: 38px;
+  font-weight: 300;              /* light for elegance */
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+/* Highlight college name */
+.welcome-title span {
+  font-size: 46px;
+  font-weight: 700;              /* bold highlight */
+  color: #ffcc00;                /* gold accent */
+  letter-spacing: 1.5px;
+}
+
+/* Subtitle */
+.welcome-subtitle {
+  font-size: 17px;
+  color: #e0e0e0;
+  margin-top: 5px;
+  letter-spacing: 0.5px;
+}
+.welcome-title span::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 3px;
+  background-color: #ffcc00;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+.home-hero {
+  
+
+  background-image: url("../assets/college-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  
+}

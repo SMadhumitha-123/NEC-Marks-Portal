@@ -1,25 +1,31 @@
+/* Login page background */
 .login-page {
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
+  width: 100%;
+  height: 100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background-image: url("../assets/college-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
+/* Login card */
 .login-card {
   width: 380px;
   padding: 30px;
   text-align: center;
 
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.95); /* single clean shade */
   border-radius: 12px;
 
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
 }
 
+/* Headings */
 .login-card h1 {
   color: #003366;
   margin-bottom: 5px;
@@ -27,7 +33,7 @@
 
 .login-card h2 {
   font-weight: normal;
-  margin-bottom: 0;
+  margin-bottom: 5px;
 }
 
 .login-card p {
@@ -36,6 +42,7 @@
   margin-bottom: 20px;
 }
 
+/* Inputs */
 .login-card input {
   width: 100%;
   padding: 10px;
@@ -45,6 +52,7 @@
   border-radius: 6px;
 }
 
+/* Button */
 .login-card button {
   width: 100%;
   margin-top: 15px;

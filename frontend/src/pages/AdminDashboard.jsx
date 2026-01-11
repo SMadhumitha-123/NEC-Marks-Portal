@@ -6,11 +6,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="admin-container">
-      <h1 className="admin-title">Admin Dashboard</h1>
-      <p className="admin-subtitle">
-        Manage Staff, Students, Subjects and Departments
-      </p>
-
+      
       <div className="admin-cards">
 
         <div className="admin-card">
