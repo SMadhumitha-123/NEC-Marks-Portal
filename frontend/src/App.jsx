@@ -5,7 +5,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
-
+import StaffAddStudents from "./pages/StaffAddStudents";
+import StaffEnterMarks from "./pages/StaffEnterMarks";
 import AddSubject from "./pages/AddSubject";
 import AddStaff from "./pages/AddStaff";
 
@@ -21,9 +22,8 @@ function App() {
           <Route path="/admin/add-subject" element={<AddSubject />} />
           <Route path="/admin/add-staff" element={<AddStaff />} />
          
-
-<Route path="/staff/add-students" element={<h2>Add Students Page</h2>} />
-<Route path="/staff/enter-marks" element={<h2>Enter Marks Page</h2>} />
+<Route path="/staff/add-students" element={<StaffAddStudents />} />
+<Route path="/staff/enter-marks" element={<StaffEnterMarks />} />
 
         </Routes>
       </Layout>

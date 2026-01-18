@@ -1,0 +1,132 @@
+/* Page background */
+
+.page-container {
+  min-height: calc(100vh - 180px); 
+  padding: 30px 60px;
+  margin-bottom: 30px;   /* gap before footer */
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+}
+
+/* Page heading */
+.page-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #063970;
+  margin-bottom: 20px;
+}
+
+/* Filter box */
+.filter-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* Dropdowns */
+.filter-box select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-width: 150px;
+  font-size: 14px;
+}
+
+/* Search button */
+.filter-box button {
+  background-color: #063970;
+  color: white;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.filter-box button:hover {
+  background-color: #052d57;
+}
+
+/* Upload box */
+.upload-box {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  max-width: 500px;
+}
+
+/* Upload button */
+.upload-box button {
+  background-color: #0a7c3a;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.upload-box button:hover {
+  background-color: #065c2a;
+}
+
+/* Marks table */
+.marks-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.marks-table th {
+  background-color: #063970;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+.marks-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.marks-table tr:hover {
+  background-color: #f5f9ff;
+}
+
+/* Mark input */
+.marks-table input {
+  width: 80px;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Submit marks button */
+.page-container > button {
+  margin-top: 20px;
+  background-color: #063970;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.page-container > button:hover {
+  background-color: #052d57;
+}
