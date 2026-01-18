@@ -4,12 +4,6 @@ const db = require("../config/db");
 const router = express.Router();
 
 
-router.get("/departments", (req, res) => {
-  db.query("SELECT dept_id, dept_name FROM department", (err, result) => {
-    if (err) return res.status(500).json({ msg: "Error" });
-    res.json(result);
-  });
-});
 
 // Add Subject
 router.post("/add-subject", (req, res) => {
@@ -24,18 +18,6 @@ router.post("/add-subject", (req, res) => {
   });
 });
 
-// Add Student
-router.post("/add-student", (req, res) => {
-  const { reg_no, name, semester, dept_id } = req.body;
-
-  const sql =
-    "INSERT INTO student (reg_no, name, semester, dept_id) VALUES (?,?,?,?)";
-
-  db.query(sql, [reg_no, name, semester, dept_id], (err) => {
-    if (err) return res.status(500).json({ msg: "Error" });
-    res.json({ msg: "Student added successfully" });
-  });
-});
 
 
 /* Add Staff */
@@ -59,6 +41,9 @@ router.get("/departments", (req, res) => {
     }
     res.json(result);
   });
-});
+});   
+
+
+
 
 module.exports = router;

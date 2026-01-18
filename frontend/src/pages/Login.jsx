@@ -8,18 +8,23 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const login = async () => {
-    try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
-        email,
-        password
-      });
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/login", {
+      email,
+      password
+    });
 
-      if (res.data.role === "ADMIN") window.location.href = "/admin";
-      else window.location.href = "/staff";
-    } catch {
-      alert("Invalid credentials");
-    }
-  };
+    // store for both admin & staff
+    localStorage.setItem("name", res.data.name);
+    localStorage.setItem("role", res.data.role);
+
+    if (res.data.role === "ADMIN") window.location.href = "/admin";
+    else window.location.href = "/staff";
+  } catch {
+    alert("Invalid credentials");
+  }
+};
+
 
   return (
     

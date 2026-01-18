@@ -17,13 +17,7 @@ export default function AdminDashboard() {
           </button>
         </div>
 
-        <div className="admin-card">
-          <h3>Add Student</h3>
-          <p>Register students details</p>
-          <button onClick={() => navigate("/admin/add-student")}>
-            Add
-          </button>
-        </div>
+        
 
         <div className="admin-card">
           <h3>Add Staff</h3>

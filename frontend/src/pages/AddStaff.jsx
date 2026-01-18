@@ -18,25 +18,44 @@ export default function AddStaff() {
   }, []);
 
   const submit = async () => {
-    await axios.post("http://localhost:5000/api/admin/add-staff", form);
-    alert("Staff added");
-  };
+  await axios.post("http://localhost:5000/api/admin/add-staff", {
+    ...form,
+    dept_id: Number(form.dept_id)
+  });
+
+  alert("Staff added");
+
+  setForm({
+    name: "",
+    email: "",
+    password: "",
+    dept_id: ""
+  });
+};
 
   return (
     <div className="form-container">
       <h2>Add Staff</h2>
 
-      <input placeholder="Staff Name"
-        onChange={e => setForm({ ...form, name: e.target.value })}
-      />
+    <input
+  value={form.name}
+  placeholder="Staff Name"
+  onChange={e => setForm({ ...form, name: e.target.value })}
+/>
 
-      <input placeholder="Email"
-        onChange={e => setForm({ ...form, email: e.target.value })}
-      />
+<input
+  value={form.email}
+  placeholder="Email"
+  onChange={e => setForm({ ...form, email: e.target.value })}
+/>
 
-      <input type="password" placeholder="Password"
-        onChange={e => setForm({ ...form, password: e.target.value })}
-      />
+<input
+  type="password"
+  value={form.password}
+  placeholder="Password"
+  onChange={e => setForm({ ...form, password: e.target.value })}
+/>
+
 
       <select
         onChange={e => setForm({ ...form, dept_id: e.target.value })}

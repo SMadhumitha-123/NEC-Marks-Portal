@@ -1,6 +1,7 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import "../styles/navcar.css";
-import logo from "../assets/logo.jpg";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CgProfile } from "react-icons/cg";
+import { AiOutlineLogout } from "react-icons/ai";
+import "../styles/navbar.css";
 
 export default function Navbar() {
   const location = useLocation();
@@ -10,8 +11,13 @@ export default function Navbar() {
     location.pathname.startsWith("/admin") ||
     location.pathname.startsWith("/staff");
 
+  const name = localStorage.getItem("name");
+
+  const handleProfile = () => {
+    alert("Profile clicked (will add later)");
+  };
+
   const handleLogout = () => {
-    // clear login data (later you can add token/session)
     localStorage.clear();
     navigate("/login");
   };
@@ -19,34 +25,25 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="nav-left">
-        {/* Back icon only on dashboard */}
-        {isDashboard && (
-          <button
-            className="nav-icon-btn"
-            title="Go Back"
-            onClick={() => navigate(-1)}
-          >
-            ←
-          </button>
-        )}
-
-        <img src={logo} alt="College Logo" className="nav-logo" />
-        <span className="nav-title">NATIONAL ENGINEERING COLLEGE</span>
+        <h2>National Engineering College</h2>
       </div>
 
-      <div className="nav-right">
-        {/* Logout only on dashboard */}
-        {isDashboard ? (
+      {isDashboard && (
+        <div className="nav-right">
+          <span className="welcome-text">
+            Hi, {name} 👋
+          </span>
+
+          <button className="icon-btn" onClick={handleProfile}>
+            <CgProfile size={22} />
+          </button>
+
           <button className="logout-btn" onClick={handleLogout}>
-            Logout
+            <AiOutlineLogout size={20} />
+            <span>Logout</span>
           </button>
-        ) : (
-          <>
-            <Link to="/">Home</Link>
-            <Link to="/login">Login</Link>
-          </>
-        )}
-      </div>
+        </div>
+      )}
     </nav>
   );
 }

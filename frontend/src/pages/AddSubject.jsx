@@ -22,29 +22,52 @@ export default function AddSubject() {
       .catch(err => console.log(err));
   }, []);
 
-  const submit = async () => {
-    await axios.post("http://localhost:5000/api/admin/add-subject", form);
-    alert("Subject added");
-  };
+ const submit = async () => {
+  await axios.post("http://localhost:5000/api/admin/add-subject", {
+    ...form,
+    dept_id: Number(form.dept_id),
+    semester: Number(form.semester)
+  });
+
+  alert("Subject added");
+
+  // 👇 CLEAR FORM
+  setForm({
+    subject_code: "",
+    subject_name: "",
+    semester: "",
+    dept_id: ""
+  });
+};
+
 
   return (
     <div className="form-container">
       <h2>Add Subject</h2>
 
       <input
-        placeholder="Subject Code"
-        onChange={e => setForm({ ...form, subject_code: e.target.value })}
-      />
+  value={form.subject_code}
+  placeholder="Subject Code"
+  onChange={e =>
+    setForm({ ...form, subject_code: e.target.value })
+  }
+/>
 
-      <input
-        placeholder="Subject Name"
-        onChange={e => setForm({ ...form, subject_name: e.target.value })}
-      />
+<input
+  value={form.subject_name}
+  placeholder="Subject Name"
+  onChange={e =>
+    setForm({ ...form, subject_name: e.target.value })
+  }
+/>
 
-      <input
-        placeholder="Semester"
-        onChange={e => setForm({ ...form, semester: e.target.value })}
-      />
+<input
+  value={form.semester}
+  placeholder="Semester"
+  onChange={e =>
+    setForm({ ...form, semester: e.target.value })
+  }
+/>
 
       {/* IMPORTANT PART */}
       <select
