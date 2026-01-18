@@ -125,102 +125,126 @@ router.post("/marks", (req, res) => {
 
   res.json({ msg: "Marks saved successfully" });
 });
-
 router.get("/marks-pdf", (req, res) => {
   const { subject_id } = req.query;
 
-  const sql = `
+  // 1️⃣ Students + marks
+  const studentsSql = `
     SELECT 
       s.student_id,
       s.student_name,
-      m.mark,
-      m.internal_examiner,
-      m.external_examiner,
-      sub.subject_code,
-      sub.subject_name,
-      sub.semester,
-      st.year
+      m.mark
     FROM marks m
     JOIN student s ON s.student_id = m.student_id
-    JOIN subject sub ON sub.subject_id = m.subject_id
-    JOIN student st ON st.student_id = m.student_id
     WHERE m.subject_id = ?
   `;
 
-  db.query(sql, [subject_id], (err, rows) => {
-    if (err) return res.status(500).json(err);
-    if (rows.length === 0) return res.status(404).send("No data");
+  // 2️⃣ Subject + examiner info (NO GROUP BY)
+  const infoSql = `
+    SELECT 
+      sub.subject_code,
+      sub.subject_name,
+      sub.semester,
+      m.internal_examiner,
+      m.external_examiner
+    FROM marks m
+    JOIN subject sub ON sub.subject_id = m.subject_id
+    WHERE m.subject_id = ?
+    LIMIT 1
+  `;
 
-    const total = rows.length;
-    let present = 0;
-    let absent = 0;
+  db.query(studentsSql, [subject_id], (err, students) => {
+    if (err) {
+      console.error("Students SQL error:", err);
+      return res.status(500).json({ error: "DB error" });
+    }
 
-    rows.forEach(r => {
-      if (r.mark === null) absent++;
-      else present++;
-    });
+    if (students.length === 0) {
+      return res.status(404).json({ error: "No data found" });
+    }
 
-    const doc = new PDFDocument({ margin: 40 });
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", "attachment; filename=Marks_Report.pdf");
-    doc.pipe(res);
+    db.query(infoSql, [subject_id], (err2, info) => {
+      if (err2) {
+        console.error("Info SQL error:", err2);
+        return res.status(500).json({ error: "DB error" });
+      }
 
-    /* ===== HEADER ===== */
-    doc.fontSize(18).text("NATIONAL ENGINEERING COLLEGE", { align: "center" });
-    doc.moveDown(0.5);
-    doc.fontSize(14).text("Students Marks Report", { align: "center" });
-    doc.moveDown();
+      const meta = info[0];
 
-    /* ===== COURSE DETAILS ===== */
-    const r0 = rows[0];
-    doc.fontSize(11);
-    doc.text(`Course Code : ${r0.subject_code}`);
-    doc.text(`Course Name : ${r0.subject_name}`);
-    doc.text(`Academic Year : ${r0.year}`);
-    doc.text(`Semester : ${r0.semester}`);
-    doc.moveDown();
+      let total = students.length;
+      let present = 0;
+      let absent = 0;
 
-    /* ===== TABLE HEADER ===== */
-    doc.font("Helvetica-Bold");
-    doc.text("Student ID", 50, doc.y);
-    doc.text("Student Name", 150, doc.y);
-    doc.text("Mark", 420, doc.y);
-    doc.moveDown(0.5);
-    doc.font("Helvetica");
+      students.forEach(s => {
+        if (s.mark === null) absent++;
+        else present++;
+      });
 
-    /* ===== TABLE ROWS ===== */
-    rows.forEach(r => {
-      doc.text(r.student_id, 50, doc.y);
-      doc.text(r.student_name, 150, doc.y);
-      doc.text(r.mark === null ? "AB" : r.mark.toString(), 420, doc.y);
+      const PDFDocument = require("pdfkit");
+      const doc = new PDFDocument({ margin: 40 });
+
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=Marks_Report.pdf"
+      );
+
+      doc.pipe(res);
+
+      // HEADER
+      doc.fontSize(18).text("NATIONAL ENGINEERING COLLEGE", { align: "center" });
       doc.moveDown(0.5);
+      doc.fontSize(14).text("Students Marks Report", { align: "center" });
+      doc.moveDown();
+
+      // SUBJECT INFO
+      doc.fontSize(11);
+      doc.text(`Course Code : ${meta.subject_code}`);
+      doc.text(`Course Name : ${meta.subject_name}`);
+      doc.text(`Semester : ${meta.semester}`);
+      doc.moveDown();
+
+      // TABLE HEADER
+      doc.font("Helvetica-Bold");
+      doc.text("Student ID", 50);
+      doc.text("Student Name", 150);
+      doc.text("Mark", 420);
+      doc.moveDown(0.5);
+      doc.font("Helvetica");
+
+      // TABLE DATA
+      students.forEach(s => {
+        doc.text(s.student_id, 50);
+        doc.text(s.student_name, 150);
+        doc.text(s.mark === null ? "AB" : s.mark.toString(), 420);
+        doc.moveDown(0.5);
+      });
+
+      doc.moveDown();
+
+      // SUMMARY
+      doc.font("Helvetica-Bold");
+      doc.text(`Total Students Registered : ${total}`);
+      doc.text(`Present : ${present}`);
+      doc.text(`Absent : ${absent}`);
+      doc.moveDown();
+
+      // EXAMINERS
+      doc.font("Helvetica");
+      doc.text(`Internal Examiner : ${meta.internal_examiner}`);
+      doc.text(`External Examiner : ${meta.external_examiner}`);
+      doc.moveDown(2);
+
+      doc.text(`Date : ${new Date().toLocaleDateString()}`);
+      doc.moveDown(2);
+
+      doc.text("Internal Examiner Signature", 50);
+      doc.text("External Examiner Signature", 350);
+
+      doc.end();
     });
-
-    doc.moveDown();
-
-    /* ===== SUMMARY ===== */
-    doc.font("Helvetica-Bold");
-    doc.text(`Total Students Registered : ${total}`);
-    doc.text(`Present : ${present}`);
-    doc.text(`Absent : ${absent}`);
-    doc.moveDown();
-
-    /* ===== EXAMINER DETAILS ===== */
-    doc.font("Helvetica");
-    doc.text(`Internal Examiner : ${r0.internal_examiner}`);
-    doc.text(`External Examiner : ${r0.external_examiner}`);
-    doc.moveDown(2);
-
-    /* ===== SIGNATURE ===== */
-    const today = new Date().toLocaleDateString();
-    doc.text(`Date : ${today}`);
-    doc.moveDown(2);
-
-    doc.text("Internal Examiner Signature", 50);
-    doc.text("External Examiner Signature", 350);
-
-    doc.end();
   });
 });
+
 
 module.exports = router;   // 🔴 THIS LINE IS MUST
