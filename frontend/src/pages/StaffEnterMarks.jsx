@@ -6,6 +6,47 @@ import "../styles/staffPages.css";
 export default function StaffEnterMarks() {
   const [students, setStudents] = useState([]);
   const [filter, setFilter] = useState(null);
+const [submitted, setSubmitted] = useState(false);
+
+const [showExaminerBox, setShowExaminerBox] = useState(false);
+const [internalExaminer, setInternalExaminer] = useState("");
+const [externalExaminer, setExternalExaminer] = useState("");
+const [summary, setSummary] = useState(null);
+   const downloadPdf = () => {
+  const url = `http://localhost:5000/api/staff/marks-pdf?subject_id=${filter.subject_id}`;
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "Marks_Report.pdf";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+const finalSubmit = async () => {
+  if (!internalExaminer || !externalExaminer) {
+    alert("Please enter both examiner names");
+    return;
+  }
+
+  const payload = {
+    subject_id: filter.subject_id,
+    internal_examiner: internalExaminer,
+    external_examiner: externalExaminer,
+    marks: students.map(s => ({
+      student_id: s.student_id,
+      mark: s.mark === "" ? null : s.mark
+    }))
+  };
+
+  await axios.post("http://localhost:5000/api/staff/marks", payload);
+
+  // ✅ IMPORTANT STATE UPDATES
+  setShowExaminerBox(false);
+  setSubmitted(true);
+
+  alert("Marks submitted successfully");
+};
+
 
   // 🔴 Called when Search button is clicked
   const handleSearch = async (f) => {
@@ -32,21 +73,34 @@ export default function StaffEnterMarks() {
   };
 
   const submitMarks = async () => {
-    const payload = {
-      marks: students.map(s => ({
-        student_id: s.student_id,
-        subject_id: filter.subject_id,
-        mark: s.mark
-      }))
-    };
+  let present = 0;
+  let absent = 0;
 
-    await axios.post(
-      "http://localhost:5000/api/staff/marks",
-      payload
-    );
+  students.forEach(s => {
+    if (s.mark === "" || s.mark === null) absent++;
+    else present++;
+  });
 
-    alert("Marks submitted successfully");
+  const payload = {
+    subject_id: filter.subject_id,
+    examiner_type: examiner,
+    marks: students.map(s => ({
+      student_id: s.student_id,
+      mark: s.mark === "" ? null : s.mark
+    }))
   };
+
+  await axios.post("http://localhost:5000/api/staff/marks", payload);
+
+  setSummary({
+    total: students.length,
+    present,
+    absent
+  });
+
+  alert("Marks submitted successfully");
+};
+
 
   return (
     <div className="page-container">
@@ -83,11 +137,46 @@ export default function StaffEnterMarks() {
         </table>
       )}
 
+
       {students.length > 0 && (
-        <button onClick={submitMarks}>
-          Submit Marks
-        </button>
+        <button onClick={() => setShowExaminerBox(true)}>
+  Submit Marks
+</button>
+
       )}
+      {showExaminerBox && (
+  <div className="examiner-box">
+    <h3>Examiner Details</h3>
+
+    <input
+      type="text"
+      placeholder="Internal Examiner Name"
+      value={internalExaminer}
+      onChange={e => setInternalExaminer(e.target.value)}
+    />
+
+    <input
+      type="text"
+      placeholder="External Examiner Name"
+      value={externalExaminer}
+      onChange={e => setExternalExaminer(e.target.value)}
+    />
+
+    <button onClick={finalSubmit}>
+      Confirm & Save
+    </button>
+  </div>
+)}
+
+     {submitted && (
+  <div style={{ marginTop: "20px" }}>
+    <button onClick={downloadPdf}>
+      Download PDF
+    </button>
+  </div>
+)}
+
+
     </div>
   );
 }
