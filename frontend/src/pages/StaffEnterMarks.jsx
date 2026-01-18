@@ -136,46 +136,56 @@ const finalSubmit = async () => {
           </tbody>
         </table>
       )}
-
+<div className="action-buttons">
 
       {students.length > 0 && (
-        <button onClick={() => setShowExaminerBox(true)}>
+        <button onClick={() => setShowExaminerBox(true)}  className="btn-primary">
   Submit Marks
 </button>
 
       )}
-      {showExaminerBox && (
+     </div>
+     {showExaminerBox && (
   <div className="examiner-box">
     <h3>Examiner Details</h3>
 
-    <input
-      type="text"
-      placeholder="Internal Examiner Name"
-      value={internalExaminer}
-      onChange={e => setInternalExaminer(e.target.value)}
-    />
+    <div className="examiner-row">
+      <input
+        type="text"
+        placeholder="Internal Examiner Name"
+        value={internalExaminer}
+        onChange={e => setInternalExaminer(e.target.value)}
+      />
 
-    <input
-      type="text"
-      placeholder="External Examiner Name"
-      value={externalExaminer}
-      onChange={e => setExternalExaminer(e.target.value)}
-    />
+      <input
+        type="text"
+        placeholder="External Examiner Name"
+        value={externalExaminer}
+        onChange={e => setExternalExaminer(e.target.value)}
+      />
 
-    <button onClick={finalSubmit}>
-      Confirm & Save
-    </button>
+      <button
+        className="btn-confirm"
+        onClick={finalSubmit}
+        disabled={!internalExaminer || !externalExaminer}
+      >
+        Confirm & Save
+      </button>
+    </div>
   </div>
 )}
 
-     {submitted && (
-  <div style={{ marginTop: "20px" }}>
-    <button onClick={downloadPdf}>
+<div className="action-buttons">
+{submitted && (
+  <div className="download-box">
+    <button className="btn-secondary" onClick={downloadPdf}>
       Download PDF
     </button>
   </div>
 )}
 
+
+</div>
 
     </div>
   );
