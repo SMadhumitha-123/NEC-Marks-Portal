@@ -6,9 +6,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="admin-container">
-      
       <div className="admin-cards">
-
         <div className="admin-card">
           <h3>Add Subject</h3>
           <p>Add subjects with course code</p>
@@ -16,9 +14,6 @@ export default function AdminDashboard() {
             Add
           </button>
         </div>
-
-        
-
         <div className="admin-card">
           <h3>Add Staff</h3>
           <p>Create staff login access</p>
