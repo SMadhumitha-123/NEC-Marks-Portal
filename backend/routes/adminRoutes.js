@@ -3,8 +3,6 @@ const db = require("../config/db");
 
 const router = express.Router();
 
-
-
 // Add Subject
 router.post("/add-subject", (req, res) => {
   const { subject_code, subject_name, semester, dept_id } = req.body;
